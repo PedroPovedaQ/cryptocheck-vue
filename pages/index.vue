@@ -4,12 +4,15 @@
       <img src="/logo.png" class="App-logo" alt="logo">
       <h1 class="title">Welcome to your Crypto Portfolio</h1>
     </header>
+    <crypto-select/>
   </div>
 </template>
 
 <script>
+import CryptoSelect from '~/components/crypto-select';
   export default {
     components: {
+      CryptoSelect
     }
   }
 </script>
