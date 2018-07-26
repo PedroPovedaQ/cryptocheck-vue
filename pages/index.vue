@@ -4,17 +4,35 @@
       <img src="/logo.png" class="App-logo" alt="logo">
       <h1 class="title">Welcome to your Crypto Portfolio</h1>
     </header>
-    <crypto-select/>
+    <crypto-select :currencies="getCurrencyMap(currencies)"/>
   </div>
 </template>
 
 <script>
 import CryptoSelect from '~/components/crypto-select';
-  export default {
-    components: {
-      CryptoSelect
+import axios from 'axios';
+
+export default {
+  async asyncData({ params }) {
+    let { data } = await axios.get(`https://api.coinmarketcap.com/v1/ticker/`);
+    return { currencies: data };
+  },
+  components: {
+    CryptoSelect
+  },
+  methods: {
+    getCurrencyMap: function(currencies) {
+      if(!currencies) {
+        return {};
+      }
+      let currencyMap = {};
+      currencies.map(currency => {
+        currencyMap[currency.id] = currency;
+      });
+      return currencyMap;
     }
   }
+};
 </script>
 
 <style>
